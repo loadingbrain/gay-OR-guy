@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DO-IT</title>
+    <style>
+        body {
+            background-color: black;
+            text-align: center;
+        }
+        .label {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            color: white;
+        }
+        .button {
+            font-family: Arial, sans-serif;
+            font-size: 20px;
+            background-color: white;
+            color: black;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            position: absolute;
+        }
+
+      
+        #btnYes {
+            left: 50%;
+            top: 35%;
+            transform: translate(-50%, -50%);
+        }
+
+        #btnNo {
+            left: 50%;
+            top: 45%; 
+            transform: translate(-50%, -50%);
+        }
+
+        @media (max-width: 768px) {
+            .label {
+                font-size: 18px;
+            }
+        
+            .button {
+                font-size: 18px;
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="label">Are you gay?</div>
+    <br>
+    <div class="label">If you skip, then you will end up gay</div>
+    <button id="btnYes" class="button">No</button>
+    <button id="btnNo" class="button">Yes</button>
+
+    <div id="resultModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="resultText1"></div>
+            <div id="resultText2"></div>
+        </div>
+    </div>
+
+    <script>
+        const btnYes = document.getElementById('btnYes');
+        const btnNo = document.getElementById('btnNo');
+        const label1 = document.getElementsByClassName('label')[0];
+        const label2 = document.getElementsByClassName('label')[1];
+        const resultModal = document.getElementById('resultModal');
+        const resultText1 = document.getElementById('resultText1');
+        const resultText2 = document.getElementById('resultText2');
+        const closeModal = document.querySelector('.close');
+        let isMoving = false;
+        
+        function moveButton() {
+            if (!isMoving) {
+                return;
+            }
+            
+            const randomX = Math.floor(Math.random() * (window.innerWidth - btnYes.offsetWidth));
+            const randomY = Math.floor(Math.random() * (window.innerHeight - btnYes.offsetHeight));
+            
+            btnYes.style.left = randomX + 'px';
+            btnYes.style.top = randomY + 'px';
+            
+             
+            label1.textContent = 'OH NO!';
+            label2.textContent = 'From now on you are gay';
+            
+            btnYes.removeEventListener('mouseover', moveButton);
+            btnYes.disabled = true;
+        }
+        
+  
+        
+        function handleNoClick() {
+       
+        }
+
+        closeModal.onclick = function() {
+            resultModal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target === resultModal) {
+                resultModal.style.display = 'none';
+            }
+        }
+
+        btnYes.addEventListener('mouseenter', () => {
+            isMoving = true;
+            moveButton();
+        });
+
+        btnYes.addEventListener('mouseleave', () => {
+            isMoving = false;
+        });
+
+        btnYes.addEventListener('click', handleYesClick);
+
+        btnNo.addEventListener('click', handleNoClick);
+
+        setInterval(moveButton, 10000000);
+    </script>
+</body>
+</html>
+
+
